@@ -76,3 +76,9 @@ The store starts with two seeded items: **Book — ₹250** and **Pen — ₹25*
 ## Ideas for extending
 
 Swap the array in `server.js` for SQLite or MongoDB (the routes stay the same), add a quantity field, or add sorting and pagination.
+
+
+## screenshot 
+
+<img width="871" height="413" alt="Screenshot 2026-11-05 070718" src="https://github.com/user-attachments/assets/c2d4985f-3852-4ae7-a02d-64b23fee717a" />
+
