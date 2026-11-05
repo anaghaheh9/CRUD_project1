@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STOCKROOM · Inventory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+    <div class="brand">
+      <span class="brand-mark" data-icon="package"></span>
+      <span class="wordmark">STOCK<b>ROOM</b></span>
+    </div>
+    <nav class="nav">
+      <button class="nav-link is-active" data-view="overview"><span data-icon="dashboard"></span>Overview</button>
+      <button class="nav-link" data-view="items"><span data-icon="package"></span>Items<em class="count" id="navCount">0</em></button>
+    </nav>
+    <p class="side-note">Data lives in server memory and resets on restart.</p>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <main class="main">
+    <header class="top">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open navigation" data-icon="menu"></button>
+      <div class="top-text">
+        <h1 id="title">Inventory Overview</h1>
+        <p id="subtitle">A live read of what you hold and what it is worth.</p>
+      </div>
+      <button class="btn btn-primary" id="addBtn"><span data-icon="plus"></span>Add New Item</button>
+    </header>
+
+    <section class="cards" id="cards" aria-label="Summary">
+      <article class="card"><span class="card-ic" data-icon="package"></span><p class="card-label">Total Items</p><p class="card-value" id="sumCount">0</p></article>
+      <article class="card card-hot"><span class="card-ic" data-icon="rupee"></span><p class="card-label">Total Inventory Value</p><p class="card-value" id="sumValue">₹0</p></article>
+      <article class="card"><span class="card-ic" data-icon="tag"></span><p class="card-label">Average Item Price</p><p class="card-value" id="sumAvg">₹0</p></article>
+    </section>
+
+    <section class="panel">
+      <div class="toolbar">
+        <label class="search"><span data-icon="search"></span>
+          <input id="search" type="search" placeholder="Search by name or ID" autocomplete="off" aria-label="Search items">
+        </label>
+        <p class="result-meta" id="resultMeta" aria-live="polite"></p>
+      </div>
+      <div id="tableWrap"></div>
+    </section>
+  </main>
+</div>
+
+<div class="drawer-scrim" id="drawerScrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true" role="dialog" aria-labelledby="drawerTitle">
+  <div class="drawer-head">
+    <h2 id="drawerTitle">Add New Item</h2>
+    <button class="icon-btn icon-btn-light" id="drawerClose" aria-label="Close form" data-icon="x"></button>
+  </div>
+  <form id="form" novalidate>
+    <div class="tag-preview" aria-hidden="true">
+      <span class="badge" id="pvId"><i>STK</i>New</span>
+      <p class="pv-name" id="pvName">Item name</p>
+      <p class="pv-price" id="pvPrice">₹0</p>
+    </div>
+    <div class="field">
+      <label for="fName">Item name</label>
+      <input id="fName" name="name" type="text" maxlength="60" placeholder="e.g. Notebook" autocomplete="off">
+      <p class="err" id="eName"></p>
+    </div>
+    <div class="field">
+      <label for="fPrice">Price</label>
+      <div class="money"><span>₹</span><input id="fPrice" name="price" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00"></div>
+      <p class="err" id="ePrice"></p>
+    </div>
+    <div class="drawer-foot">
+      <button type="button" class="btn btn-ghost" id="cancelBtn">Cancel</button>
+      <button type="submit" class="btn btn-primary" id="saveBtn">Add item</button>
+    </div>
+  </form>
+</aside>
+
+<div class="modal-scrim" id="modal" aria-hidden="true">
+  <div class="modal" role="alertdialog" aria-labelledby="mTitle" aria-describedby="mText">
+    <span class="modal-ic" data-icon="trash"></span>
+    <h3 id="mTitle">Delete this item?</h3>
+    <p id="mText"></p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="mCancel">Keep item</button>
+      <button class="btn btn-danger" id="mConfirm">Delete item</button>
+    </div>
+  </div>
+</div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
